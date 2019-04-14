@@ -1,44 +1,45 @@
-const userTypes = ` 
+const userTypes = `
 
-     # User definition types
+    # User definition type
+    type User {
+        id: ID!
+        name: String!
+        email: String!
+        photo: String
+        createdAt: String!
+        updatedAt: String!
+        posts(first: Int, offset: Int): [ Post! ]!
+    }
 
-     type User {
-         id: ID!
-         name: String! 
-         email: String!
-         photo: String
-         createdAt: String!
-         updatedAt: String!
-         posts(first: Int, offset: Int): [Post! ]!
-     }
-
-     input UserCreateInput {
-        name: String! 
+    input UserCreateInput {
+        name: String!
         email: String!
         password: String!
-     }
+    }
 
-     input UserUpdateInput {
-        name: String! 
+    input UserUpdateInput {
+        name: String!
         email: String!
         photo: String!
-     }
-
-     input UserUpadatePasswordInput {
-        password: String! 
     }
+
+    input UserUpdatePasswordInput {
+        password: String!
+    }
+
 `;
 
 const userQueries = `
-    users(first: Int, offset: Int ): [User! ]!
+    users(first: Int, offset: Int): [ User! ]!
     user(id: ID!): User
+    currentUser: User
 `;
 
 const userMutations = `
-    createUser( input: UserCreateInput!): User
-    updateUser( id: ID!, input: UserUpdateInput!): User
-    updateUserPassword(id: ID!, input: UserUpadatePasswordInput!): Boolean
-    deleteUser(id: ID!): Boolean    
+    createUser(input: UserCreateInput!): User
+    updateUser(input: UserUpdateInput!): User
+    updateUserPassword(input: UserUpdatePasswordInput!): Boolean
+    deleteUser: Boolean
 `;
 
 export {

@@ -37,6 +37,15 @@ export const onListening = (server: Server) => {
 
 export const handleError = (error: Error)=>{
     let errorMenssage: string = `${error.name}: ${error.message}`;
-    console.log(errorMenssage);
+    if (process.env.NODE_ENV !== 'test') {console.log(errorMenssage);}
     return Promise.reject(new Error(errorMenssage));
 }
+
+export const throwError = (condition: boolean, message: string): void => {
+
+    if(condition){
+        throw new Error(message);
+    }
+};
+
+export const JWT_SECRET: string = process.env.JWT_SECRET;
