@@ -1,4 +1,4 @@
-import { Server } from "https";
+import { Server } from "http";
 
 export const normalizePort = (val: number | string): number  => {
     return (typeof val === 'string') ? parseInt(val) : val;
