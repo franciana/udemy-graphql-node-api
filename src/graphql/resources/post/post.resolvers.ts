@@ -53,7 +53,8 @@ export const postResolvers = {
     Query: {
         
         posts: (parent, {first= 10, offset= 0}, context: ResolverContext, info: GraphQLResolveInfo) => {
-            //console.log(Object.keys(graphqlFields(info)));
+            console.log(Object.keys(graphqlFields(info)));
+            console.log(context.db.Post);
             return context.db.Post
             .findAll({
                 limit: first,
@@ -92,28 +93,28 @@ export const postResolvers = {
                     .findById(id)
                     .then((post: PostInstance) =>{
                         throwError(!post, `Post with id ${id} not found!`);
-                        throwError(post.get('author') != authUser.id, `Unauthorized! `);
+                        throwError(post.get('author') != authUser.id, `Unauthorized!`);
                         input.auth = authUser.id;
                         return post.update(input,{transaction:t});
                     }); 
-            }).catch(handleError);
+            }).catch(handleError); 
         }),
-
+ 
 
         deletePost: compose(...authResolvers) ((parent, {id},  {db, authUser}: {db: DbConnection, authUser: AuthUser}, info: GraphQLResolveInfo) => {
             id = parseInt(id)
             return db.sequelize.transaction((t: Transaction) =>{
                 return db.Post
-                    .findById(id)
+                    .findById(id) 
                     .then((post: PostInstance) =>{
                         throwError(!post, `Post with id ${id} not found!`);
-                        throwError(post.get('author') != authUser.id, `Unauthorized! ` );
+                        throwError(post.get('author') != authUser.id, `Unauthorized!` );
                         return post.destroy({transaction:t})
                             //.then(post=>!!post);
                             .then(post=>true)
                             .catch(post=>false);
                     }); 
-            }).catch(handleError);
+            }).catch(handleError); 
         })
 
     }

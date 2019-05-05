@@ -44,7 +44,7 @@ class App {
         // Segurnça da API, trata o headers https://github.com/helmetjs/helmet
         this.express.use(helmet());
 
-        this.express.use('/graphql'
+        this.express.use('/graphql' 
 
             , extractJwtMiddleware()
         
