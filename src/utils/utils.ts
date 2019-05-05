@@ -1,10 +1,8 @@
-import { Server } from "http";
+import { Server } from "https";
 
-export const normalizePort = (val: number | string): number | string | boolean => {
-    let port: number = (typeof val === 'string') ? parseInt(val) : val;
-    if (isNaN(port)) return val;
-    else if (port >= 0) return port;
-    else return false;
+export const normalizePort = (val: number | string): number  => {
+    return (typeof val === 'string') ? parseInt(val) : val;
+    
 }
 
 export const onError = (server: Server) => {
@@ -30,7 +28,7 @@ export const onError = (server: Server) => {
 export const onListening = (server: Server) => {
     return (): void => {
         let addr = server.address();
-        let bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
+        let bind = (typeof addr === 'string') ? `pipe ${addr}` : `(http/https)://${addr.address}:${addr.port}`;
         console.log(`Listening at ${bind}...`);
     }
 }
